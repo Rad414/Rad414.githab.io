@@ -208,6 +208,419 @@
     </div>
 
     <script>
+    // База данных вопросов для каждой категории
+    const quizzes = {
+        'Киновикторина': [
+            {
+                question: 'Какой актер сыграл Тони Старка в фильмах Marvel?',
+                options: ['Роберт Дауни-младший', 'Крис Эванс', 'Марк Руффало', 'Крис Хемсворт'],
+                correct: 0
+            },
+            {
+                question: 'В каком году вышел фильм "Титаник"?',
+                options: ['1995', '1997', '1999', '2001'],
+                correct: 1
+            },
+            {
+                question: 'Как звали главного героя фильма "Форрест Гамп"?',
+                options: ['Форрест', 'Джонни', 'Томми', 'Бубба'],
+                correct: 0
+            }
+        ],
+        'Музыкальный баттл': [
+            {
+                question: 'Кто исполнил песню "Blinding Lights"?',
+                options: ['The Weeknd', 'Drake', 'Justin Bieber', 'Ed Sheeran'],
+                correct: 0
+            },
+            {
+                question: 'Какой группе принадлежит хит "Bohemian Rhapsody"?',
+                options: ['The Beatles', 'Queen', 'Led Zeppelin', 'Pink Floyd'],
+                correct: 1
+            }
+        ],
+        // Добавьте вопросы для остальных категорий по аналогии
+    };
+
+    // Переменные для отслеживания состояния викторины
+    let currentQuiz = null;
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let timer;
+
+    // Находим основные элементы для модальных окон
+    const quizContainer = document.querySelector('.container');
+    let quizModal, resultsModal;
+
+    // Создаем модальные окна
+    function createModals() {
+        // Модальное окно викторины
+        quizModal = document.createElement('div');
+        quizModal.className = 'modal';
+        quizModal.innerHTML = `
+            <div class="modal-content">
+                <div class="quiz-header">
+                    <h2 id="quiz-title"></h2>
+                    <div class="progress">Вопрос <span id="current-q">1</span> из <span id="total-q">3</span></div>
+                    <div class="timer">Время: <span id="time-left">30</span>с</div>
+                </div>
+                <div class="question-container">
+                    <h3 id="question-text"></h3>
+                    <div class="options-container" id="options"></div>
+                </div>
+                <button class="next-btn" id="next-btn">Следующий вопрос</button>
+            </div>
+        `;
+
+        // Модальное окно результатов
+        resultsModal = document.createElement('div');
+        resultsModal.className = 'modal';
+        resultsModal.innerHTML = `
+            <div class="modal-content results-content">
+                <h2>Результаты викторины!</h2>
+                <div class="score">Ваш результат: <span id="final-score">0</span> из <span id="total-questions">0</span></div>
+                <div class="score-message" id="score-message"></div>
+                <button class="restart-btn" id="restart-btn">Пройти еще раз</button>
+                <button class="home-btn" id="home-btn">На главную</button>
+            </div>
+        `;
+
+        document.body.appendChild(quizModal);
+        document.body.appendChild(resultsModal);
+    }
+
+    // Стили для модальных  окон
+    const modalStyles = `
+        <style>
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                backdrop-filter: blur(5px);
+                z-index: 1000;
+                animation: fadeIn 0.3s ease;
+            }
+
+            .modal-content {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #2c3e50, #34495e);
+                padding: 30px;
+                border-radius: 20px;
+                width: 90%;
+                max-width: 600px;
+                max-height: 90vh;
+                overflow-y: auto;
+                border: 2px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .quiz-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .progress, .timer {
+                background: rgba(255, 255, 255, 0.1);
+                padding: 8px 15px;
+                border-radius: 20px;
+                font-size: 0.9em;
+            }
+
+            .question-container {
+                margin: 30px 0;
+            }
+
+            #question-text {
+                font-size: 1.3em;
+                margin-bottom: 20px;
+                line-height: 1.4;
+            }
+
+            .option {
+                background: rgba(255, 255, 255, 0.1);
+                padding: 15px;
+                margin: 10px 0;
+                border-radius: 10px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                border: 1px solid transparent;
+            }
+
+            .option:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateX(5px);
+            }
+
+            .option.correct {
+                background: rgba(46, 204, 113, 0.3);
+                border-color: #2ecc71;
+            }
+
+            .option.incorrect {
+                background: rgba(231, 76, 60, 0.3);
+                border-color: #e74c3c;
+            }
+
+            .next-btn, .restart-btn, .home-btn {
+                background: linear-gradient(45deg, #3498db, #2980b9);
+                color: white;
+                border: none;
+                padding: 12px 30px;
+                border-radius: 25px;
+                font-size: 1em;
+                cursor: pointer;
+                margin: 5px;
+                transition: all 0.3s ease;
+            }
+
+            .restart-btn { background: linear-gradient(45deg, #f39c12, #e67e22); }
+            .home-btn { background: linear-gradient(45deg, #95a5a6, #7f8c8d); }
+
+            .next-btn:hover, .restart-btn:hover, .home-btn:hover {
+                transform: scale(1.05);
+            }
+
+            .results-content {
+                text-align: center;
+            }
+
+            .score {
+                font-size: 1.5em;
+                margin: 20px 0;
+                font-weight: bold;
+            }
+
+            .score-message {
+                font-size: 1.2em;
+                margin: 20px 0;
+                padding: 15px;
+                border-radius: 10px;
+                background: rgba(255, 255, 255, 0.1);
+            }
+                        @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+
+            @media (max-width: 768px) {
+                .quiz-header {
+                    flex-direction: column;
+                    text-align: center;
+                }
+            }
+        </style>
+    `;
+
+    // Добавляем стили в head
+    document.head.insertAdjacentHTML('beforeend', modalStyles);
+
+    // Инициализация
+    function init() {
+        createModals();
+        setupEventListeners();
+    }
+
+    // Настройка обработчиков событий
+    function setupEventListeners() {
+        // Обработчики для кнопок старта
+        document.querySelectorAll('.start-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const quizCard = this.closest('.quiz-card');
+                const quizTitle = quizCard.querySelector('.quiz-title').textContent;
+                startQuiz(quizTitle);
+            });
+        });
+
+        // Обработчики для модальных окон
+        quizModal.addEventListener('click', function(e) {
+            if (e.target === this) closeQuiz();
+        });
+
+        resultsModal.addEventListener('click', function(e) {
+            if (e.target === this) closeResults();
+        });
+
+        // Обработчики для кнопок внутри модальных окон
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('restart-btn').addEventListener('click', restartQuiz);
+        document.getElementById('home-btn').addEventListener('click', closeResults);
+    }
+
+    // Запуск викторины
+    function startQuiz(quizTitle) {
+        if (!quizzes[quizTitle] || quizzes[quizTitle].length === 0) {
+            alert('Викторина временно недоступна!');
+            return;
+        }
+
+        currentQuiz = quizzes[quizTitle];
+        currentQuestionIndex = 0;
+        score = 0;
+
+        quizContainer.style.display = 'none';
+        quizModal.style.display = 'block';
+
+        showQuestion();
+    }
+
+    // Показать вопрос
+    function showQuestion() {
+        const question = currentQuiz[currentQuestionIndex];
+        const totalQuestions = currentQuiz.length;
+
+        // Обновляем заголовок и прогресс
+        document.getElementById('quiz-title').textContent = 'Киновикторина';
+        document.getElementById('current-q').textContent = currentQuestionIndex + 1;
+        document.getElementById('total-q').textContent = totalQuestions;
+
+        // Показываем вопрос
+        document.getElementById('question-text').textContent = question.question;
+
+        // Показываем варианты ответов
+        const optionsContainer = document.getElementById('options');
+        optionsContainer.innerHTML = '';
+
+        question.options.forEach((option, index) => {
+            const optionElement = document.createElement('div');
+            optionElement.className = 'option';
+            optionElement.textContent = option;
+            optionElement.addEventListener('click', () => selectAnswer(index));
+            optionsContainer.appendChild(optionElement);
+        });
+
+        // Запускаем таймер
+        startTimer();
+    }
+
+    // Таймер для вопроса
+    function startTimer() {
+        let timeLeft = 30;
+        document.getElementById('time-left').textContent = timeLeft;
+
+        if (timer) clearInterval(timer);
+
+        timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById('time-left').textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                handleTimeUp();
+            }
+        }, 1000);
+    }
+
+    // Обработка выбора ответа
+    function selectAnswer(selectedIndex) {
+        clearInterval(timer);
+
+        const question = currentQuiz[currentQuestionIndex];
+        const options = document.querySelectorAll('.option');
+
+        options.forEach((option, index) => {
+            option.style.pointerEvents = 'none'; // Блокируем клики
+            if (index === question.correct) {
+                option.classList.add('correct');
+            } else if (index === selectedIndex) {
+                option.classList.add('incorrect');
+            }
+        });
+
+        // Проверяем ответ
+        if (selectedIndex === question.correct) {
+            score++;
+        }
+
+        // Показываем кнопку "Далее"
+        document.getElementById('next-btn').style.display = 'block';
+    }
+
+    // Время вышло
+    function handleTimeUp() {
+        const options = document.querySelectorAll('.option');
+        const question = currentQuiz[currentQuestionIndex];
+
+        options.forEach((option, index) => {
+            option.style.pointerEvents = 'none';
+            if (index === question.correct) {
+                option.classList.add('correct');
+            }
+        });
+
+        document.getElementById('next-btn').style.display = 'block';
+    }
+
+    // Следующий вопрос
+    function nextQuestion() {
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex < currentQuiz.length) {
+            document.getElementById('next-btn').style.display = 'none';
+            showQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    // Показать результаты
+    function showResults() {
+        quizModal.style.display = 'none';
+        resultsModal.style.display = 'block';
+
+        const totalQuestions = currentQuiz.length;
+        const percentage = (score / totalQuestions) * 100;
+
+        document.getElementById('final-score').textContent = score;
+        document.getElementById('total-questions').textContent = totalQuestions;
+
+        const messageElement = document.getElementById('score-message');
+        if (percentage >= 80) {
+            messageElement.textContent = '🎉 Отличный результат! Вы настоящий эксперт!';
+            messageElement.style.background = 'rgba(46, 204, 113, 0.2)';
+        } else if (percentage >= 60) {
+            messageElement.textContent = '👍 Хороший результат! Так держать!';
+            messageElement.style.background = 'rgba(52, 152, 219, 0.2)';
+        } else {
+            messageElement.textContent = '💪 Есть куда расти! Попробуйте еще раз!';
+            messageElement.style.background = 'rgba(231, 76, 60, 0.2)';
+        }
+    }
+
+    // Перезапуск викторины
+    function restartQuiz() {
+        resultsModal.style.display = 'none';
+        currentQuestionIndex = 0;
+        score = 0;
+        quizModal.style.display = 'block';
+        showQuestion();
+    }
+
+    // Закрыть викторину
+    function closeQuiz() {
+        quizModal.style.display = 'none';
+        quizContainer.style.display = 'block';
+        if (timer) clearInterval(timer);
+    }
+
+    // Закрыть результаты
+    function closeResults() {
+        resultsModal.style.display = 'none';
+        quizContainer.style.display = 'block';
+    }
+
+    // Запускаем инициализацию при загрузке страницы
+    document.addEventListener('DOMContentLoaded', init);
+</script>
         // Простая логика для кнопок
         document.querySelectorAll('.start-btn').forEach(button => {
             button.addEventListener('click', function() {
@@ -217,4 +630,4 @@
         });
     </script>
 </body>
-</html>
+    </html>
