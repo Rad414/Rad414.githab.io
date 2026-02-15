@@ -1,52 +1,29 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Конструктор викторин</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizzesQuick — Создавай и проходи викторины</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>🧩 Конструктор викторин</h1>
+  <div class="container">
+    <header>
+      <h1>🎉 QuizzesQuick</h1>
+      <p>Создавай викторины, проверяй знания — быстро, легко, бесплатно!</p>
+    </header>
 
-        <!-- Режим конструктора -->
-        <section id="builder-section">
-            <h2>Создание викторины</h2>
-            <div class="input-group">
-                <input type="text" id="quiz-title" placeholder="Название викторины">
-            </div>
-            <div class="question-form">
-                <h3>Добавить вопрос</h3>
-                <input type="text" id="question-text" placeholder="Текст вопроса">
-                <div id="options-container">
-                    <input type="text" class="option-input" placeholder="Вариант ответа 1">
-                    <input type="text" class="option-input" placeholder="Вариант ответа 2">
-                </div>
-                <button id="add-option">+ Добавить вариант</button>
-                <label>Правильный ответ:
-                    <select id="correct-answer">
-                        <option value="0">Вариант 1</option>
-                        <option value="1">Вариант 2</option>
-                    </select>
-                </label>
-                <button id="add-question">Добавить вопрос</button>
-            </div>
-            <div id="questions-list"></div>
-            <button id="save-quiz">Сохранить викторину</button>
-        </section>
-
-        <!-- Режим прохождения викторины -->
-        <section id="quiz-section" style="display:none;">
-            <h2 id="quiz-title-display"></h2>
-            <div id="quiz-questions"></div>
-            <button id="submit-quiz">Завершить викторину</button>
-            <div id="quiz-result"></div>
-        </section>
-
-        <!-- Переключение между режимами -->
-        <button id="toggle-mode">Перейти к режиму викторины</button>
+    <div class="buttons">
+      <a href="creator.html" class="btn btn-primary">➕ Создать викторину</a>
+      <a href="quiz.html" class="btn btn-secondary">🧠 Пройти викторину</a>
     </div>
-    <script src="script.js"></script>
+
+    <footer>
+      <p>Все викторины сохраняются в вашем браузере.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
+
