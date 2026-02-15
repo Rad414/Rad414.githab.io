@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Создать викторину — QuizzesQuick</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📝 Создайте свою викторину</h1>
+    <p>Придумайте тему, вопросы и ответы — всё сохранится в вашем браузере!</p>
+
+    <div class="quiz-container">
+      <label for="title">Название викторины:</label>
+      <input type="text" id="title" placeholder="Например: 'Знание столиц Европы'" required>
+
+      <label for="description">Описание:</label>
+      <textarea id="description" rows="3" placeholder="Что проверяет эта викторина?"></textarea>
+
+      <label for="topic">Тема:</label>
+      <input type="text" id="topic" placeholder="Например: География, История, Наука" required>
+
+      <hr>
+
+      <h2>Добавить вопрос</h2>
+      <div id="questions-container">
+        <!-- Вопросы будут добавляться сюда -->
+      </div>
+
+      <button id="add-question" class="btn btn-primary">➕ Добавить вопрос</button>
+      <button id="save-quiz" class="btn btn-secondary">💾 Сохранить викторину</button>
+    </div>
+
+    <a href="index.html" class="btn btn-secondary" style="margin-top: 30px;">← Назад</a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
