@@ -1,3 +1,5 @@
+/* Тест — добавьте в начало style.css */
+body { background: red !important; font-size: 20px !important; }
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -175,3 +177,4 @@ nav {
         width: 100%; /* Полная ширина на мобильных */
     }
     }
+
