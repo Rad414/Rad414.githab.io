@@ -3,13 +3,9 @@ const QUIZZES_KEY = 'quizzes';
 
 // Функция для инициализации страницы создания викторины
 function initCreator() {
-  console.log('initCreator запущена'); // Отладка: проверьте консоль
   const addBtn = document.getElementById('add-question');
   const saveBtn = document.getElementById('save-quiz');
   const container = document.getElementById('questions-container');
-
-  console.log('addBtn найден:', !!addBtn); // Отладка
-  console.log('container найден:', !!container);
 
   if (!addBtn || !saveBtn || !container) {
     console.error('Элементы не найдены! Проверьте HTML.');
@@ -18,7 +14,6 @@ function initCreator() {
 
   // Обработчик добавления вопроса
   addBtn.addEventListener('click', () => {
-    console.log('Кнопка "Добавить вопрос" нажата'); // Отладка
     const questionDiv = document.createElement('div');
     questionDiv.className = 'question-form';
     const uniqueId = Date.now();
@@ -134,7 +129,6 @@ function initCreator() {
 
 // Функция для инициализации страницы прохождения викторины
 function initQuiz() {
-  console.log('initQuiz запущена'); // Отладка
   const select = document.getElementById('quiz-select');
   const content = document.getElementById('quiz-content');
   const result = document.getElementById('result');
@@ -165,7 +159,6 @@ function initQuiz() {
 
   // Обработчик выбора викторины
   select.addEventListener('change', () => {
-    console.log('Викторина выбрана'); // Отладка
     if (!select.value) {
       content.style.display = 'none';
       result.style.display = 'none';
