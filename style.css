@@ -1,1 +1,189 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #ffeb3b 0%, #ff9800 100%); /* Яркий жёлто-оранжевый градиент */
+    transition: background 0.3s ease;
+    box-sizing: border-box;
+}
 
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff9c4; /* Светло-жёлтый фон для контейнера */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(255, 152, 0, 0.3); /* Оранжевая тень для яркости */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 152, 0, 0.5); /* Более яркая тень при hover */
+}
+
+h1, h2, h3 {
+    color: #ff5722; /* Ярко-оранжевый цвет заголовков */
+    transition: color 0.3s ease;
+}
+
+h1:hover {
+    color: #d32f2f; /* Красный при hover для акцента */
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+input[type="text"], select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 2px solid #ff9800; /* Оранжевая граница */
+    border-radius: 6px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus, select:focus, textarea:focus {
+    border-color: #4caf50; /* Зелёный фокус */
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5); /* Зелёная светящаяся тень */
+}
+
+button {
+    background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%); /* Яркий зелёный градиент для кнопок */
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    margin: 5px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #388e3c 0%, #43a047 100%); /* Темнее зелёный при hover */
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.6); /* Яркая зелёная тень */
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.question-form {
+    border: 1px solid #ff9800; /* Оранжевая граница для форм вопросов */
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    background: #fff3e0; /* Светло-оранжевый фон для форм */
+    transition: background 0.3s ease;
+}
+
+.question-form:hover {
+    background: #ffe0b2; /* Более яркий оранжевый при hover */
+}
+
+#questions-list {
+    margin: 20px 0;
+}
+
+.question-item {
+    background: #e8f5e8; /* Светло-зелёный фон для элементов вопросов */
+    padding: 12px;
+    margin: 10px 0;
+    border-left: 4px solid #ff5722; /* Красный акцент */
+    border-radius: 6px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.question-item:hover {
+    background: #c8e6c9; /* Темнее зелёный при hover */
+    transform: translateX(5px);
+}
+
+.option-input {
+    margin-bottom: 5px;
+}
+
+#quiz-questions {
+    margin: 20px 0;
+}
+
+.question {
+    margin-bottom: 15px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.quiz-option {
+    margin: 5px 0;
+    transition: color 0.3s ease;
+}
+
+.quiz-option:hover {
+    color: #ff5722; /* Красный при hover для опций */
+}
+
+/* Новые добавления для доступности и отзывчивости */
+a:focus, button:focus, input:focus, select:focus, textarea:focus {
+    outline: 2px solid #4caf50; /* Зелёный фокус */
+    outline-offset: 2px;
+}
+
+nav {
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.buttons a {
+    background: linear-gradient(135deg, #f44336 0%, #e57373 100%); /* Яркий красный градиент для ссылок */
+    color: white;
+    padding: 12px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.buttons a:hover {
+    background: linear-gradient(135deg, #d32f2f 0%, #ef5350 100%); /* Темнее красный при hover */
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(244, 67, 54, 0.5); /* Красная тень */
+}
+
+/* Анимация fade-in для элементов */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Медиа-запрос для мобильных устройств */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+        margin: 0 10px;
+    }
+    .buttons {
+        flex-direction: column;
+    }
+    input[type="text"], select, textarea {
+        font-size: 16px;
+    }
+    button {
+        width: 100%;
+    }
+    html {
+        font-size: 14px;
+    }
+}
+
+/* Ключ для хранения викторин в localStorage */
