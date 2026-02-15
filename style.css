@@ -1,152 +1,79 @@
-{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #333;
-  min-height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
 }
 
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  text-align: center;
-  color: white;
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-header h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+h1, h2, h3 {
+    color: #333;
 }
 
-header p {
-  font-size: 1.2rem;
-  margin-bottom: 40px;
-  opacity: 0.9;
+.input-group {
+    margin-bottom: 15px;
 }
 
-.buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin: 40px auto;
-  max-width: 400px;
+input[type="text"], select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
-.btn {
-  padding: 16px 30px;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  text-decoration: none;
-  font-weight: bold;
-  transition: transform 0.2s, box-shadow 0.2s;
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.btn-primary {
-  background: #4CAF50;
-  color: white;
+button:hover {
+    background-color: #0056b3;
 }
 
-.btn-primary:hover {
-  background: #45a049;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+.question-form {
+    border: 1px solid #eee;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 4px;
 }
 
-.btn-secondary {
-  background: #2196F3;
-  color: white;
+#questions-list {
+    margin: 20px 0;
 }
 
-.btn-secondary:hover {
-  background: #0b7dda;
-  transform: translateY(-3px);
-box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+.question-item {
+    background: #f9f9f9;
+    padding: 10px;
+    margin: 10px 0;
+    border-left: 4px solid #007bff;
 }
 
-footer {
-  margin-top: 60px;
-  font-size: 0.9rem;
-  opacity: 0.8;
+.option-input {
+    margin-bottom: 5px;
 }
 
-/* Дополнительные стили для creator.html и quiz.html */
-.quiz-container {
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  margin: 20px auto;
-  max-width: 700px;
-  color: #333;
+#quiz-questions {
+    margin: 20px 0;
 }
 
-.question {
-  margin: 25px 0;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 10px;
-  border-left: 4px solid #4CAF50;
+.quiz-question {
+    margin-bottom: 15px;
 }
 
-.answer {
-  display: block;
-  margin: 12px 0;
-  padding: 12px;
-  background: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s;
+.quiz-option {
+    margin: 5px 0;
 }
-
-.answer:hover {
-  background: #e0e0e0;
-}
-
-.answer.correct {
-  background: #d4edda;
-  border-color: #28a745;
-}
-
-.answer.incorrect {
-  background: #f8d7da;
-  border-color: #dc3545;
-}
-
-.result {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 30px 0;
-  color: #2c3e50;
-}
-
-.btn-large {
-  display: block;
-  width: 100%;
-  padding: 18px;
-  font-size: 1.3rem;
-  margin-top: 30px;
-}
-
-@media (max-width: 600px) {
-  header h1 {
-    font-size: 2rem;
-  }
-  .buttons {
-    gap: 15px;
-  }
-  .btn {
-    padding: 14px 25px;
-    font-size: 1.1rem;
-  }
-}
-
