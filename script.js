@@ -134,14 +134,3 @@ toggleModeButton.addEventListener('click', () => {
         currentMode = 'builder';
     }
 });
-
-// Запуск викторины
-function startQuiz() {
-    quizTitleDisplay.textContent = quiz.title;
-    quizQuestionsContainer.innerHTML = '';
-    quizResult.innerHTML = '';
-    
-    quiz.questions.forEach((question, index) => {
-        const questionDiv = document.createElement('div');
-        questionDiv.className = 'quiz-question';
-        questionDiv.innerHTML = `<p><strong>Вопросt
