@@ -2,8 +2,9 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%); /* Лёгкий градиент для фона */
-    transition: background 0.3s ease; /* Плавное изменение фона при загрузке */
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    transition: background 0.3s ease;
+    box-sizing: border-box; /* Добавлено для лучшего контроля размеров */
 }
 
 .container {
@@ -11,13 +12,13 @@ body {
     margin: 0 auto;
     background: white;
     padding: 20px;
-    border-radius: 12px; /* Увеличил скругление */
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15); /* Увеличил тень для глубины */
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Анимация при hover */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .container:hover {
-    transform: translateY(-2px); /* Лёгкий подъём при hover */
+    transform: translateY(-2px);
     box-shadow: 0 6px 25px rgba(0,0,0,0.2);
 }
 
@@ -27,7 +28,7 @@ h1, h2, h3 {
 }
 
 h1:hover {
-    color: #6a0dad; /* Фиолетовый акцент при hover на заголовке */
+    color: #6a0dad;
 }
 
 .input-group {
@@ -36,23 +37,23 @@ h1:hover {
 
 input[type="text"], select, textarea {
     width: 100%;
-    padding: 10px; /* Увеличил padding */
+    padding: 10px;
     margin: 5px 0;
-    border: 2px solid #ddd; /* Толще граница */
+    border: 2px solid #ddd;
     border-radius: 6px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input[type="text"]:focus, select:focus, textarea:focus {
-    border-color: #6a0dad; /* Фиолетовый фокус */
-    box-shadow: 0 0 8px rgba(106, 13, 173, 0.3); /* Светящаяся тень */
+    border-color: #6a0dad;
+    box-shadow: 0 0 8px rgba(106, 13, 173, 0.3);
 }
 
 button {
-    background: linear-gradient(135deg, #6a0dad 0%, #9b59b6 100%); /* Фиолетовый градиент */
+    background: linear-gradient(135deg, #6a0dad 0%, #9b59b6 100%);
     color: white;
     border: none;
-    padding: 12px 18px; /* Увеличил padding */
+    padding: 12px 18px;
     margin: 5px;
     border-radius: 6px;
     cursor: pointer;
@@ -60,13 +61,13 @@ button {
 }
 
 button:hover {
-    background: linear-gradient(135deg, #5a0b9a 0%, #8e44ad 100%); /* Темнее при hover */
-    transform: scale(1.05); /* Лёгкое увеличение */
+    background: linear-gradient(135deg, #5a0b9a 0%, #8e44ad 100%);
+    transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(106, 13, 173, 0.4);
 }
 
 button:active {
-    transform: scale(0.98); /* Эффект нажатия */
+    transform: scale(0.98);
 }
 
 .question-form {
@@ -74,7 +75,7 @@ button:active {
     padding: 15px;
     margin: 10px 0;
     border-radius: 8px;
-    background: #fafafa; /* Светлый фон для форм */
+    background: #fafafa;
     transition: background 0.3s ease;
 }
 
@@ -90,14 +91,14 @@ button:active {
     background: #f9f9f9;
     padding: 12px;
     margin: 10px 0;
-    border-left: 4px solid #6a0dad; /* Фиолетовый акцент */
+    border-left: 4px solid #6a0dad;
     border-radius: 6px;
     transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .question-item:hover {
     background: #f0f0f0;
-    transform: translateX(5px); /* Сдвиг вправо при hover */
+    transform: translateX(5px);
 }
 
 .option-input {
@@ -108,9 +109,9 @@ button:active {
     margin: 20px 0;
 }
 
-.quiz-question {
+.question { /* Унифицировано: теперь соответствует HTML */
     margin-bottom: 15px;
-    animation: fadeIn 0.5s ease-in-out; /* Анимация появления */
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .quiz-option {
@@ -119,7 +120,7 @@ button:active {
 }
 
 .quiz-option:hover {
-    color: #6a0dad; /* Акцент на hover */
+    color: #6a0dad;
 }
 
 /* Новые добавления для доступности и отзывчивости */
@@ -169,11 +170,14 @@ nav {
         flex-direction: column;
     }
     input[type="text"], select, textarea {
-        font-size: 16px; /* Предотвращает зум на iOS */
+        font-size: 16px;
     }
     button {
-        width: 100%; /* Полная ширина на мобильных */
+        width: 100%;
     }
+    html {
+        font-size: 14px; /* Добавлено для масштабирования */
     }
+}
 
-
+/* Ключ для хранения викторин в localStorage */ /* Исправлено: теперь корректный комментарий CSS */
