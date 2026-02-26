@@ -10,7 +10,7 @@ function initCreator() {
   if (!addBtn || !saveBtn) return;
 
   // Обработчик добавления вопроса
-  addBtn.addEventListener('click', () => {
+  addBtn.addEventListener('click'), () => {
     const questionDiv = document.createElement('div');
     questionDiv.className = 'question-form';
     const uniqueId = Date.now();
@@ -50,7 +50,7 @@ function initCreator() {
   });
 
   // Обработчик сохранения викторины
-  saveBtn.addEventListener('click', () => {
+  saveBtn.addEventListener('click'), () => {
     const title = document.getElementById('title').value.trim();
     const description = document.getElementById('description').value.trim();
     const topic = document.getElementById('topic').value.trim();
