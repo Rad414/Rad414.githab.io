@@ -10,7 +10,7 @@ function initCreator() {
   if (!addBtn || !saveBtn) return;
 
   // Обработчик добавления вопроса
-  addBtn.addEventListener('click'), () => {
+  addBtn.addEventListener('click', () => {
     const questionDiv = document.createElement('div');
     questionDiv.className = 'question-form';
     const uniqueId = Date.now();
@@ -50,7 +50,7 @@ function initCreator() {
   });
 
   // Обработчик сохранения викторины
-  saveBtn.addEventListener('click'), () => {
+  saveBtn.addEventListener('click', () => {
     const title = document.getElementById('title').value.trim();
     const description = document.getElementById('description').value.trim();
     const topic = document.getElementById('topic').value.trim();
@@ -112,7 +112,7 @@ function initCreator() {
     try {
       // Шифруем данные и формируем URL
       const encryptedData = encryptQuizData(quiz);
-      const currentUrl = window.location.origin + window.location.pathname.replace('create.html', 'quiz.html');
+      const currentUrl = window.location.origin + window.location.pathname.replace('creator.html', 'quiz.html');
       const quizUrl = `${currentUrl}?quiz=${encryptedData}`;
 
       // Показываем ссылку пользователю
