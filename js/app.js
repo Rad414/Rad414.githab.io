@@ -79,36 +79,50 @@ function initCreator() {
       questions: questions
     };
 
-    saveBtn.addEventListener('click', () => {
-  // ... существующий код сбора данных ...
+    // Сохраняем в localStorage
+    localStorage.setItem('currentQuiz', JSON.stringify(quiz));
 
-  if (questions.length === 0) {
-    alert('Добавьте хотя бы один вопрос с заполненными полями!');
-    return;
-  }
+    // Формируем ссылку для прохождения с данными викторины
+    try {
+      const encryptedData = btoa(encodeURIComponent(JSON.stringify(quiz)));
+      const quizUrl = `${window.location.origin}${window.location.pathname.replace('creator.html', 'quiz.html')}?quiz=${encryptedData}`;
 
-  const quiz = {
-    id: Date.now().toString(),
-    title: title,
-    topic: topic,
-    questions: questions
-  };
 
-  // Сохраняем в localStorage
-  localStorage.setItem('currentQuiz', JSON.stringify(quiz));
+      // Показываем ссылку пользователю
+      const linkContainer = document.getElementById('share-link-container');
+      if (linkContainer) {
+        linkContainer.innerHTML = `
+          <p>Викторина сохранена! Поделитесь этой ссылкой:</p>
+          <input type="text" value="${quizUrl}" readonly style="width: 100%; padding: 8px; margin: 5px 0;">
+          <button onclick="copyToClipboard('${quizUrl}')" class="btn">Копировать ссылку</button>
+        `;
+      } else {
+        console.warn('Элемент #share-link-container не найден');
+        alert(`Викторина сохранена! Ссылка: ${quizUrl}`);
+      }
+    } catch (error) {
+      console.error('Ошибка при создании ссылки:', error);
+      alert('Не удалось создать ссылку. Викторина сохранена в браузере.');
+    }
+  });
+}
 
-  // Формируем ссылку для прохождения
-  const quizUrl = window.location.origin + window.location.pathname.replace('creator.html', 'quiz.html');
-
-  // Показываем ссылку пользователю
-  const linkContainer = document.getElementById('share-link-container');
-  linkContainer.innerHTML = `
-    <p>Викторина сохранена! Поделитесь этой ссылкой:</p>
-    <input type="text" value="${quizUrl}" readonly>
-    <button onclick="copyToClipboard('${quizUrl}')">Копировать ссылку</button>
-  `;
-});
-
+// Функция копирования в буфер обмена
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Ссылка скопирована в буфер обмена!');
+  }).catch(err => {
+    console.error('Ошибка копирования:', err);
+    // Резервный вариант для старых браузеров
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    alert('Ссылка скопирована (через резервный метод)');
+  });
+}
 
 // Инициализируем при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
